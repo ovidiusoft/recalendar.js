@@ -587,6 +587,19 @@ class Configuration extends React.PureComponent {
 							</Form.Group>
 							<Form.Label>{t( 'configuration.general.weekend' )}</Form.Label>
 							<ListGroup>{this.renderWeekendSelection()}</ListGroup>
+							<Form.Group controlId="lineHeight" className="mt-3">
+								<Form.Label>{t( 'configuration.general.line-height.label' )}</Form.Label>
+								<Form.Control
+									type="number"
+									value={ this.state.lineHeight }
+									onChange={ this.handleFieldChange }
+									min={ 10 }
+									max={ 50 }
+								/>
+								<Form.Text className="text-muted">
+									{t( 'configuration.general.line-height.description' )}
+								</Form.Text>
+							</Form.Group>
 						</Accordion.Body>
 					</Accordion.Item>
 					<SpecialDates

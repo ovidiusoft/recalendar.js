@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { ITINERARY_ITEM, ITINERARY_LINES } from '~/lib/itinerary-utils';
+import PdfConfig from '~/pdf/config';
 
 class Itinerary extends React.PureComponent {
 	styles = StyleSheet.create( {
 		line: {
 			borderBottom: '1 solid #AAA',
-			fontSize: 12,
+			fontSize: Math.round((this.props.config?.lineHeight || 20) * 0.6),
 			fontWeight: 'bold',
-			height: 20,
-			minHeight: 20,
+			height: this.props.config?.lineHeight || 20,
+			minHeight: this.props.config?.lineHeight || 20,
 			padding: '2 0 0 5',
 		},
 	} );
@@ -51,6 +52,7 @@ class Itinerary extends React.PureComponent {
 
 Itinerary.propTypes = {
 	items: PropTypes.array.isRequired,
+	config: PropTypes.instanceOf( PdfConfig ),
 };
 
 export default Itinerary;

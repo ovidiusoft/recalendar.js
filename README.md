@@ -29,6 +29,8 @@ npm install
 npm run dev
 ```
 
+Then navigate to [http://localhost:5173/create.html](http://localhost:5173/create.html) to start testing
+
 ## Known issues
 
 See the [FAQ](https://recalendar.me/faq) and [the open issues on GitHub](https://github.com/klimeryk/recalendar.js/issues).

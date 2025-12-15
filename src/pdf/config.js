@@ -15,6 +15,7 @@ const CONFIG_FIELDS = [
 	'dpi',
 	'pageSize',
 	'fontFamily',
+	'lineHeight',
 	'year',
 	'month',
 	'firstDayOfWeek',
@@ -59,6 +60,7 @@ class PdfConfig {
 		this.alwaysOnSidebar = false;
 		this.monthCount = 12;
 		this.fontFamily = LATO;
+		this.lineHeight = 20;
 		this.isMonthOverviewEnabled = true;
 		this.habits = [
 			t( 'habits.example1', { ns: 'config' } ),
