@@ -699,6 +699,36 @@ class Configuration extends React.PureComponent {
 							</Accordion.Item>
 						</Accordion>
 					</ToggleAccordionItem>
+					<ToggleAccordionItem
+						id="isMonthRetrospectiveEnabled"
+						title={ t( 'configuration.month.retrospective.title' ) }
+						onToggle={ this.handleToggle }
+						toggledOn={ this.state.isMonthRetrospectiveEnabled }
+					>
+						<p className="mb-0">
+							{t( 'configuration.month.retrospective.description' )}
+						</p>
+						<Accordion
+							className="mt-3"
+							defaultActiveKey="monthRetrospectiveItinerary"
+						>
+							<Accordion.Item eventKey="monthRetrospectiveItinerary">
+								<Accordion.Header>
+									{t( 'configuration.month.retrospective.itinerary.title' )}
+								</Accordion.Header>
+								<Accordion.Body>
+									<Itinerary
+										field="monthRetrospectiveItinerary"
+										itinerary={ this.state.monthRetrospectiveItinerary }
+										onAdd={ this.handleItineraryAdd }
+										onChange={ this.handleItineraryChange }
+										onDragEnd={ this.handleDragEnd }
+										onRemove={ this.handleItineraryRemove }
+									/>
+								</Accordion.Body>
+							</Accordion.Item>
+						</Accordion>
+					</ToggleAccordionItem>
 				</Accordion>
 				<Stack
 					direction="vertical"

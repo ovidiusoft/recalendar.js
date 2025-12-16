@@ -26,12 +26,10 @@ class Header extends React.PureComponent {
 				paddingRight: 5,
 			},
 			subtitle: {
-				marginLeft: 'auto',
 				textTransform: 'uppercase',
 				textAlign: 'right',
 				margin: '0 5',
 				fontSize: props.subtitleSize,
-				flex: 1,
 			},
 			title: {
 				textTransform: 'uppercase',
@@ -73,7 +71,6 @@ class Header extends React.PureComponent {
 			stylesObject.meta.borderRight = 'none';
 
 			delete stylesObject.dateMain.marginLeft;
-			delete stylesObject.subtitle.marginLeft;
 
 			stylesObject.dateInfo.flexDirection = 'row-reverse';
 			stylesObject.subtitle.textAlign = 'left';
@@ -110,6 +107,12 @@ class Header extends React.PureComponent {
 			titleLink,
 		} = this.props;
 
+		const arrowGroupStyle = {
+			flexDirection: 'row',
+			alignItems: 'center',
+			marginLeft: 'auto',
+		};
+
 		return (
 			<View id={ id } style={ this.styles.header }>
 				<View style={ this.styles.meta }>
@@ -117,17 +120,44 @@ class Header extends React.PureComponent {
 						<Link src={ titleLink } style={ this.styles.title }>
 							{title}
 						</Link>
-						<Link src={ previousLink } style={ this.styles.arrow }>
-							«
-						</Link>
-						<Text style={ this.styles.dayNumber }>{number}</Text>
-						<Link src={ nextLink } style={ this.styles.arrow }>
-							»
-						</Link>
+						{number && previousLink && (
+							<Link src={ previousLink } style={ this.styles.arrow }>
+								«
+							</Link>
+						)}
+						{number && <Text style={ this.styles.dayNumber }>{number}</Text>}
+						{number && nextLink && (
+							<Link src={ nextLink } style={ this.styles.arrow }>
+								»
+							</Link>
+						)}
 					</View>
 					<View style={ this.styles.dateInfo }>
 						{this.renderSpecialItems()}
-						<Text style={ this.styles.subtitle }>{subtitle}</Text>
+						{! number ? (
+							<View style={ arrowGroupStyle }>
+								{previousLink && (
+									<Link src={ previousLink } style={ this.styles.arrow }>
+										«
+									</Link>
+								)}
+								<Text style={ this.styles.subtitle }>{subtitle}</Text>
+								{nextLink && (
+									<Link src={ nextLink } style={ this.styles.arrow }>
+										»
+									</Link>
+								)}
+							</View>
+						) : (
+							<Text
+								style={ {
+									...this.styles.subtitle,
+									marginLeft: this.props.isLeftHanded ? undefined : 'auto',
+								} }
+							>
+								{subtitle}
+							</Text>
+						)}
 					</View>
 				</View>
 				{calendar}
@@ -146,15 +176,15 @@ Header.propTypes = {
 	children: PropTypes.node,
 	calendar: PropTypes.node.isRequired,
 	isLeftHanded: PropTypes.bool.isRequired,
-	number: PropTypes.string.isRequired,
+	number: PropTypes.string,
 	specialItems: PropTypes.array,
 	subtitle: PropTypes.string.isRequired,
 	subtitleSize: PropTypes.number,
 	title: PropTypes.string.isRequired,
 	titleLink: PropTypes.string,
 	titleSize: PropTypes.number,
-	previousLink: PropTypes.string.isRequired,
-	nextLink: PropTypes.string.isRequired,
+	previousLink: PropTypes.string,
+	nextLink: PropTypes.string,
 };
 
 export default Header;

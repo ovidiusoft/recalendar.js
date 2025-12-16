@@ -87,6 +87,10 @@ export function weekRetrospectiveLink( date ) {
 	return 'week-retrospective-' + date.format( 'WWYYYY' );
 }
 
+export function monthRetrospectiveLink( date ) {
+	return 'month-retrospective-' + date.format( 'MMYYYY' );
+}
+
 export function yearOverviewLink() {
 	return 'year-overview';
 }

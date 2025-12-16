@@ -31,6 +31,8 @@ const CONFIG_FIELDS = [
 	'dayItineraries',
 	'isWeekRetrospectiveEnabled',
 	'weekRetrospectiveItinerary',
+	'isMonthRetrospectiveEnabled',
+	'monthRetrospectiveItinerary',
 	'specialDates',
 ];
 
@@ -109,6 +111,13 @@ class PdfConfig {
 				value: 50,
 			},
 		];
+		this.isMonthRetrospectiveEnabled = true;
+		this.monthRetrospectiveItinerary = [
+			{
+				type: ITINERARY_LINES,
+				value: 50,
+			},
+		];
 		this.device = REMARKABLE;
 		const { dpi, pageSize } = getPageProperties( this.device );
 		this.dpi = dpi;
@@ -160,6 +169,7 @@ class PdfConfig {
 			'specialDates',
 			'todos',
 			'weekRetrospectiveItinerary',
+			'monthRetrospectiveItinerary',
 		];
 
 		fieldsRequiringUniqueIds.forEach( ( field ) => {

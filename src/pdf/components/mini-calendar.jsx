@@ -15,6 +15,7 @@ import PdfConfig from '~/pdf/config';
 import {
 	dayPageLink,
 	monthOverviewLink,
+	monthRetrospectiveLink,
 	weekOverviewLink,
 	weekRetrospectiveLink,
 	yearOverviewLink,
@@ -141,7 +142,7 @@ class MiniCalendar extends React.Component {
 		);
 	}
 
-	renderWeekdayNames() {
+	renderWeekdayNames( retrospectiveColumnEnabled ) {
 		const { t } = this.props;
 		const { day, week } = this.styles;
 		const weekdays = getWeekdays( this.props.config.firstDayOfWeek );
@@ -164,35 +165,47 @@ class MiniCalendar extends React.Component {
 					{t( 'calendar.header.week-number' )}
 				</Text>
 				{daysOfTheWeek}
-				{this.props.config.isWeekRetrospectiveEnabled && (
-					<Text
-						style={ [
-							day,
-							this.styles.weekRetrospective,
-							this.styles.weekdayName,
-							{ paddingTop: 1 },
-						] }
-					>
-						{t( 'calendar.header.retrospective' )}
-					</Text>
-				)}
+				{retrospectiveColumnEnabled &&
+					( this.props.config.isMonthRetrospectiveEnabled ? (
+						<Link
+							src={ '#' + monthRetrospectiveLink( this.props.date ) }
+							style={ [
+								day,
+								this.styles.weekRetrospective,
+								this.styles.weekdayName,
+								{ paddingTop: 1 },
+							] }
+						>
+							{t( 'calendar.body.retrospective' )}
+						</Link>
+					) : (
+						<Text
+							style={ [
+								day,
+								this.styles.weekRetrospective,
+								this.styles.weekdayName,
+								{ paddingTop: 1 },
+							] }
+						/>
+					) )
+				}
 			</View>
 		);
 	}
 
-	renderMonth() {
+	renderMonth( retrospectiveColumnEnabled ) {
 		let currentWeek = this.props.date.startOf( 'month' ).startOf( 'week' );
 		const endDate = this.props.date.endOf( 'month' );
 		const weekRows = [];
 		while ( currentWeek.isBefore( endDate ) ) {
-			weekRows.push( this.renderWeek( currentWeek ) );
+			weekRows.push( this.renderWeek( currentWeek, retrospectiveColumnEnabled ) );
 			currentWeek = currentWeek.add( 1, 'week' );
 		}
 
 		return <>{weekRows}</>;
 	}
 
-	renderWeek( week ) {
+	renderWeek( week, retrospectiveColumnEnabled ) {
 		const { config, t } = this.props;
 		const { day } = this.styles;
 		const days = [];
@@ -266,24 +279,33 @@ class MiniCalendar extends React.Component {
 					{weekNumber}
 				</Link>
 				{days}
-				{config.isWeekRetrospectiveEnabled && (
-					<Link
-						src={ '#' + weekRetrospectiveLink( week ) }
-						style={ [ day, this.styles.weekRetrospective ] }
-					>
-						{t( 'calendar.body.retrospective' )}
-					</Link>
-				)}
+				{retrospectiveColumnEnabled &&
+					// eslint-disable-next-line max-len
+					( config.isWeekRetrospectiveEnabled ? (
+						<Link
+							src={
+								'#' + weekRetrospectiveLink( week )
+							}
+							style={ [ day, this.styles.weekRetrospective ] }
+						>
+							{t( 'calendar.body.retrospective' )}
+						</Link>
+					) : (
+						<Text style={ [ day, this.styles.weekRetrospective ] } />
+					) )
+				}
 			</View>
 		);
 	}
 
 	render() {
+		const retrospectiveColumnEnabled = this.props.config.isWeekRetrospectiveEnabled || this.props.config.isMonthRetrospectiveEnabled;
+
 		return (
 			<View style={ this.styles.body }>
 				{this.renderMonthName()}
-				{this.renderWeekdayNames()}
-				{this.renderMonth()}
+				{this.renderWeekdayNames( retrospectiveColumnEnabled )}
+				{this.renderMonth( retrospectiveColumnEnabled )}
 			</View>
 		);
 	}

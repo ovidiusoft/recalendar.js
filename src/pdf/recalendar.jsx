@@ -7,6 +7,7 @@ import PdfConfig from '~/pdf/config';
 import DayPage from '~/pdf/pages/day';
 import LastPage from '~/pdf/pages/last';
 import MonthOverviewPage from '~/pdf/pages/month-overview';
+import MonthRetrospectivePage from '~/pdf/pages/month-retrospective';
 import WeekOverviewPage from '~/pdf/pages/week-overview';
 import WeekRetrospectivePage from '~/pdf/pages/week-retrospective';
 import YearOverviewPage from '~/pdf/pages/year-overview';
@@ -28,6 +29,7 @@ class RecalendarPdf extends React.Component {
 		const weekPages = [];
 		let currentDate = startOfWeek.clone();
 		const endOfWeek = startOfWeek.add( 1, 'weeks' );
+		let isLastDayOfMonth = false;
 		while ( currentDate.isBefore( endOfWeek ) ) {
 			if ( config.isMonthOverviewEnabled && currentDate.date() === 1 ) {
 				weekPages.push(
@@ -40,6 +42,12 @@ class RecalendarPdf extends React.Component {
 			}
 			const key = 'day-' + currentDate.unix();
 			weekPages.push( <DayPage key={ key } date={ currentDate } config={ config } /> );
+			
+			// Check if this is the last day of the month
+			if ( currentDate.date() === currentDate.endOf( 'month' ).date() ) {
+				isLastDayOfMonth = true;
+			}
+			
 			currentDate = currentDate.add( 1, 'days' );
 		}
 		return (
@@ -50,6 +58,9 @@ class RecalendarPdf extends React.Component {
 				{weekPages}
 				{config.isWeekRetrospectiveEnabled && (
 					<WeekRetrospectivePage date={ startOfWeek } config={ config } />
+				)}
+				{isLastDayOfMonth && config.isMonthRetrospectiveEnabled && (
+					<MonthRetrospectivePage date={ startOfWeek.endOf( 'month' ) } config={ config } />
 				)}
 			</React.Fragment>
 		);
