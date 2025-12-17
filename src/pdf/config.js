@@ -4,10 +4,7 @@ import { t } from 'i18next';
 import { REMARKABLE, getPageProperties } from '~/lib/device-utils';
 import { wrapWithId } from '~/lib/id-utils';
 import { ITINERARY_ITEM, ITINERARY_LINES } from '~/lib/itinerary-utils';
-import {
-	HOLIDAY_DAY_TYPE,
-	EVENT_DAY_TYPE,
-} from '~/lib/special-dates-utils';
+import { HOLIDAY_DAY_TYPE, EVENT_DAY_TYPE } from '~/lib/special-dates-utils';
 import { LATO } from '~/pdf/lib/fonts';
 
 const CONFIG_FIELDS = [
@@ -31,6 +28,8 @@ const CONFIG_FIELDS = [
 	'dayItineraries',
 	'isWeekRetrospectiveEnabled',
 	'weekRetrospectiveItinerary',
+	'isCustomPagesEnabled',
+	'customPagesItinerary',
 	'isMonthRetrospectiveEnabled',
 	'monthRetrospectiveItinerary',
 	'specialDates',
@@ -42,22 +41,22 @@ export const CONFIG_VERSION_2 = 'v2';
 export const CONFIG_VERSION_3 = 'v3';
 export const CONFIG_CURRENT_VERSION = CONFIG_VERSION_3;
 
-export function hydrateFromObject( object ) {
+export function hydrateFromObject(object) {
 	return CONFIG_FIELDS.reduce(
-		( fields, field ) => ( {
+		(fields, field) => ({
 			...fields,
-			[ field ]: object[ field ],
-		} ),
+			[field]: object[field],
+		}),
 		{},
 	);
 }
 
 class PdfConfig {
-	constructor( configOverrides = {} ) {
+	constructor(configOverrides = {}) {
 		this.year = dayjs().year();
 		this.month = 0;
 		this.firstDayOfWeek = dayjs.localeData().firstDayOfWeek();
-		this.weekendDays = [ 0, 6 ];
+		this.weekendDays = [0, 6];
 		this.isLeftHanded = false;
 		this.alwaysOnSidebar = false;
 		this.monthCount = 12;
@@ -65,15 +64,15 @@ class PdfConfig {
 		this.lineHeight = 20;
 		this.isMonthOverviewEnabled = true;
 		this.habits = [
-			t( 'habits.example1', { ns: 'config' } ),
-			t( 'habits.example2', { ns: 'config' } ),
-			t( 'habits.example3', { ns: 'config' } ),
-			t( 'habits.example4', { ns: 'config' } ),
+			t('habits.example1', { ns: 'config' }),
+			t('habits.example2', { ns: 'config' }),
+			t('habits.example3', { ns: 'config' }),
+			t('habits.example4', { ns: 'config' }),
 		];
 		this.monthItinerary = [
 			{
 				type: ITINERARY_ITEM,
-				value: t( 'month.goal', { ns: 'config' } ),
+				value: t('month.goal', { ns: 'config' }),
 			},
 			{
 				type: ITINERARY_LINES,
@@ -81,7 +80,7 @@ class PdfConfig {
 			},
 			{
 				type: ITINERARY_ITEM,
-				value: t( 'month.notes', { ns: 'config' } ),
+				value: t('month.notes', { ns: 'config' }),
 			},
 			{
 				type: ITINERARY_LINES,
@@ -90,22 +89,29 @@ class PdfConfig {
 		];
 		this.isWeekOverviewEnabled = true;
 		this.todos = [
-			t( 'todos.example1', { ns: 'config' } ),
-			t( 'todos.example2', { ns: 'config' } ),
+			t('todos.example1', { ns: 'config' }),
+			t('todos.example2', { ns: 'config' }),
 		];
 
 		let dayOfWeek = this.firstDayOfWeek;
-		this.dayItineraries = [ ...Array( 7 ).keys() ].map( () => {
+		this.dayItineraries = [...Array(7).keys()].map(() => {
 			const itinerary = {
 				dayOfWeek,
-				items: [ { type: ITINERARY_LINES, value: 50 } ],
+				items: [{ type: ITINERARY_LINES, value: 50 }],
 				isEnabled: true,
 			};
 			dayOfWeek = ++dayOfWeek % 7;
 			return itinerary;
-		} );
+		});
 		this.isWeekRetrospectiveEnabled = true;
 		this.weekRetrospectiveItinerary = [
+			{
+				type: ITINERARY_LINES,
+				value: 50,
+			},
+		];
+		this.isCustomPagesEnabled = false;
+		this.customPagesItinerary = [
 			{
 				type: ITINERARY_LINES,
 				value: 50,
@@ -119,44 +125,44 @@ class PdfConfig {
 			},
 		];
 		this.device = REMARKABLE;
-		const { dpi, pageSize } = getPageProperties( this.device );
+		const { dpi, pageSize } = getPageProperties(this.device);
 		this.dpi = dpi;
 		this.pageSize = pageSize;
 		this.specialDates = [
 			{
 				date: '01-01',
-				value: t( 'special-dates.example1', { ns: 'config' } ),
+				value: t('special-dates.example1', { ns: 'config' }),
 				type: HOLIDAY_DAY_TYPE,
 			},
 			{
 				date: '01-01',
-				value: t( 'special-dates.example2', { ns: 'config' } ),
+				value: t('special-dates.example2', { ns: 'config' }),
 				type: HOLIDAY_DAY_TYPE,
 			},
 			{
 				date: '01-03',
-				value: t( 'special-dates.example3', { ns: 'config' } ),
+				value: t('special-dates.example3', { ns: 'config' }),
 				type: HOLIDAY_DAY_TYPE,
 			},
 			{
 				date: '01-13',
-				value: t( 'special-dates.example4', { ns: 'config' } ),
+				value: t('special-dates.example4', { ns: 'config' }),
 				type: EVENT_DAY_TYPE,
 			},
 			{
 				date: '01-13',
-				value: t( 'special-dates.example5', { ns: 'config' } ),
+				value: t('special-dates.example5', { ns: 'config' }),
 				type: HOLIDAY_DAY_TYPE,
 			},
 			{
 				date: '01-14',
-				value: t( 'special-dates.example6', { ns: 'config' } ),
+				value: t('special-dates.example6', { ns: 'config' }),
 				type: EVENT_DAY_TYPE,
 			},
 		];
 
-		if ( Object.keys( configOverrides ).length !== 0 ) {
-			Object.assign( this, configOverrides );
+		if (Object.keys(configOverrides).length !== 0) {
+			Object.assign(this, configOverrides);
 		}
 
 		this.ensureUniqueIds();
@@ -169,18 +175,19 @@ class PdfConfig {
 			'specialDates',
 			'todos',
 			'weekRetrospectiveItinerary',
+			'customPagesItinerary',
 			'monthRetrospectiveItinerary',
 		];
 
-		fieldsRequiringUniqueIds.forEach( ( field ) => {
-			const thisField = this[ field ];
-			this[ field ] = thisField.map( wrapWithId );
-		} );
+		fieldsRequiringUniqueIds.forEach((field) => {
+			const thisField = this[field];
+			this[field] = thisField.map(wrapWithId);
+		});
 
-		this.dayItineraries = this.dayItineraries.map( ( dayItinerary ) => {
-			dayItinerary.items = dayItinerary.items.map( wrapWithId );
+		this.dayItineraries = this.dayItineraries.map((dayItinerary) => {
+			dayItinerary.items = dayItinerary.items.map(wrapWithId);
 			return dayItinerary;
-		} );
+		});
 	}
 }
 

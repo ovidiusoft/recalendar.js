@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import PdfConfig from '~/pdf/config';
+import CustomPage from '~/pdf/pages/custom';
 import DayPage from '~/pdf/pages/day';
 import LastPage from '~/pdf/pages/last';
 import MonthOverviewPage from '~/pdf/pages/month-overview';
@@ -84,6 +85,15 @@ class RecalendarPdf extends React.Component {
 				config={ this.props.config }
 			/>,
 		);
+
+		if ( this.props.config.isCustomPagesEnabled ) {
+			pageList.push(
+				<CustomPage
+					key="custom-pages"
+					config={ this.props.config }
+				/>,
+			);
+		}
 
 		currentDate = currentDate.startOf( 'week' );
 		while ( currentDate.isBefore( endDate ) ) {

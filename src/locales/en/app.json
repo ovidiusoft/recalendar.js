@@ -98,14 +98,16 @@
 			"placeholder": {
 				"lines": "Number of lines",
 				"page": "New page break",
-				"item": "Itinerary item"
+				"item": "Itinerary item",
+				"title": "Title text"
 			},
 			"button": {
 				"copy": "Copy this itinerary to all other days",
 				"remove": "Remove",
 				"item": "Add itinerary item",
 				"page": "Start a new page",
-				"lines": "Add empty lines"
+				"lines": "Add empty lines",
+				"title": "Add title"
 			}
 		},
 		"items-list": {
@@ -149,6 +151,13 @@
 				"itinerary": {
 					"title": "Itinerary"
 				}
+			}
+		},
+		"custom-pages": {
+			"title": "Custom pages",
+			"description": "Add custom pages to your calendar with your own content and structure.",
+			"itinerary": {
+				"title": "Itinerary"
 			}
 		},
 		"day": {

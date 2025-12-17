@@ -729,6 +729,31 @@ class Configuration extends React.PureComponent {
 							</Accordion.Item>
 						</Accordion>
 					</ToggleAccordionItem>
+					<ToggleAccordionItem
+						id="isCustomPagesEnabled"
+						title={ t( 'configuration.custom-pages.title' ) }
+						onToggle={ this.handleToggle }
+						toggledOn={ this.state.isCustomPagesEnabled }
+					>
+						<p className="mb-0">{t( 'configuration.custom-pages.description' )}</p>
+						<Accordion className="mt-3" defaultActiveKey="customPagesItinerary">
+							<Accordion.Item eventKey="customPagesItinerary">
+								<Accordion.Header>
+									{t( 'configuration.custom-pages.itinerary.title' )}
+								</Accordion.Header>
+								<Accordion.Body>
+									<Itinerary
+										field="customPagesItinerary"
+										itinerary={ this.state.customPagesItinerary }
+										onAdd={ this.handleItineraryAdd }
+										onChange={ this.handleItineraryChange }
+										onDragEnd={ this.handleDragEnd }
+										onRemove={ this.handleItineraryRemove }
+									/>
+								</Accordion.Body>
+							</Accordion.Item>
+						</Accordion>
+					</ToggleAccordionItem>
 				</Accordion>
 				<Stack
 					direction="vertical"
