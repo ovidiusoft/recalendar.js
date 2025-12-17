@@ -2,7 +2,7 @@ import { StyleSheet, Text } from '@react-pdf/renderer';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { ITINERARY_ITEM, ITINERARY_LINES } from '~/lib/itinerary-utils';
+import { ITINERARY_ITEM, ITINERARY_LINES, ITINERARY_TITLE } from '~/lib/itinerary-utils';
 import PdfConfig from '~/pdf/config';
 
 class Itinerary extends React.PureComponent {
@@ -15,12 +15,22 @@ class Itinerary extends React.PureComponent {
 			minHeight: this.props.config?.lineHeight || 20,
 			padding: '2 0 0 5',
 		},
+		title: {
+			fontSize: 24,
+			fontWeight: 'bold',
+			textAlign: 'center',
+			marginBottom: 20,
+			marginTop: 20,
+		},
 	});
 
 	renderItineraryItem = ({ type, value }, index) => {
 		switch (type) {
 			case ITINERARY_ITEM:
 				return this.renderItem(value, index);
+
+			case ITINERARY_TITLE:
+				return this.renderTitle(value, index);
 
 			case ITINERARY_LINES:
 			default:
@@ -31,6 +41,14 @@ class Itinerary extends React.PureComponent {
 	renderItem(text, index) {
 		return (
 			<Text key={index} style={this.styles.line}>
+				{text}
+			</Text>
+		);
+	}
+
+	renderTitle(text, index) {
+		return (
+			<Text key={index} style={this.styles.title}>
 				{text}
 			</Text>
 		);

@@ -12,6 +12,7 @@ import {
 	ITINERARY_ITEM,
 	ITINERARY_LINES,
 	ITINERARY_NEW_PAGE,
+	ITINERARY_TITLE,
 } from '~/lib/itinerary-utils';
 
 function SortableItineraryRow( props ) {
@@ -33,6 +34,20 @@ function SortableItineraryRow( props ) {
 				onChange={ onChange }
 				data-id={ id }
 				data-type={ ITINERARY_ITEM }
+				data-field={ props.field }
+				required
+			/>
+		);
+	}
+
+	function renderTitle() {
+		return (
+			<FormControl
+				placeholder={ t( 'configuration.itinerary.placeholder.title' ) }
+				value={ value }
+				onChange={ onChange }
+				data-id={ id }
+				data-type={ ITINERARY_TITLE }
 				data-field={ props.field }
 				required
 			/>
@@ -87,6 +102,9 @@ function SortableItineraryRow( props ) {
 		switch ( type ) {
 			case ITINERARY_ITEM:
 				return renderItem();
+
+			case ITINERARY_TITLE:
+				return renderTitle();
 
 			case ITINERARY_NEW_PAGE:
 				return renderNewPage();
