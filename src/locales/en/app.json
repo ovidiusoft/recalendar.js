@@ -153,6 +153,15 @@
 				}
 			}
 		},
+		"year": {
+			"retrospective": {
+				"title": "Year retrospective",
+				"description": "Year retrospective is a place to reflect on the past year - achievements, learnings, goals for the next year.",
+				"itinerary": {
+					"title": "Itinerary"
+				}
+			}
+		},
 		"custom-pages": {
 			"title": "Custom pages",
 			"description": "Add custom pages to your calendar with your own content and structure.",

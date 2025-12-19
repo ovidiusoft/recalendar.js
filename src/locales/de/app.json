@@ -124,6 +124,15 @@
 				}
 			}
 		},
+		"year": {
+			"retrospective": {
+				"title": "Jahresrückschau",
+				"description": "Die Jahresrückschau ist der Ort, um über das vergangene Jahr nachzudenken - Errungenschaften, Erkenntnisse, Ziele für das nächste Jahr.",
+				"itinerary": {
+					"title": "Plan"
+				}
+			}
+		},
 		"day": {
 			"title": "Tagespläne"
 		},

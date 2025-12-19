@@ -91,6 +91,10 @@ export function monthRetrospectiveLink( date ) {
 	return 'month-retrospective-' + date.format( 'MMYYYY' );
 }
 
+export function yearRetrospectiveLink( date ) {
+	return 'year-retrospective-' + date.format( 'YYYY' );
+}
+
 export function yearOverviewLink() {
 	return 'year-overview';
 }

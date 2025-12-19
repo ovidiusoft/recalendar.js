@@ -32,6 +32,8 @@ const CONFIG_FIELDS = [
 	'customPagesItinerary',
 	'isMonthRetrospectiveEnabled',
 	'monthRetrospectiveItinerary',
+	'isYearRetrospectiveEnabled',
+	'yearRetrospectiveItinerary',
 	'specialDates',
 ];
 
@@ -124,6 +126,13 @@ class PdfConfig {
 				value: 50,
 			},
 		];
+		this.isYearRetrospectiveEnabled = true;
+		this.yearRetrospectiveItinerary = [
+			{
+				type: ITINERARY_LINES,
+				value: 50,
+			},
+		];
 		this.device = REMARKABLE;
 		const { dpi, pageSize } = getPageProperties(this.device);
 		this.dpi = dpi;
@@ -177,6 +186,7 @@ class PdfConfig {
 			'weekRetrospectiveItinerary',
 			'customPagesItinerary',
 			'monthRetrospectiveItinerary',
+			'yearRetrospectiveItinerary',
 		];
 
 		fieldsRequiringUniqueIds.forEach((field) => {

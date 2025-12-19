@@ -730,6 +730,36 @@ class Configuration extends React.PureComponent {
 						</Accordion>
 					</ToggleAccordionItem>
 					<ToggleAccordionItem
+						id="isYearRetrospectiveEnabled"
+						title={ t( 'configuration.year.retrospective.title' ) }
+						onToggle={ this.handleToggle }
+						toggledOn={ this.state.isYearRetrospectiveEnabled }
+					>
+						<p className="mb-0">
+							{t( 'configuration.year.retrospective.description' )}
+						</p>
+						<Accordion
+							className="mt-3"
+							defaultActiveKey="yearRetrospectiveItinerary"
+						>
+							<Accordion.Item eventKey="yearRetrospectiveItinerary">
+								<Accordion.Header>
+									{t( 'configuration.year.retrospective.itinerary.title' )}
+								</Accordion.Header>
+								<Accordion.Body>
+									<Itinerary
+										field="yearRetrospectiveItinerary"
+										itinerary={ this.state.yearRetrospectiveItinerary }
+										onAdd={ this.handleItineraryAdd }
+										onChange={ this.handleItineraryChange }
+										onDragEnd={ this.handleDragEnd }
+										onRemove={ this.handleItineraryRemove }
+									/>
+								</Accordion.Body>
+							</Accordion.Item>
+						</Accordion>
+					</ToggleAccordionItem>
+					<ToggleAccordionItem
 						id="isCustomPagesEnabled"
 						title={ t( 'configuration.custom-pages.title' ) }
 						onToggle={ this.handleToggle }

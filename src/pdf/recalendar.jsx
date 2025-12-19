@@ -12,6 +12,7 @@ import MonthRetrospectivePage from '~/pdf/pages/month-retrospective';
 import WeekOverviewPage from '~/pdf/pages/week-overview';
 import WeekRetrospectivePage from '~/pdf/pages/week-retrospective';
 import YearOverviewPage from '~/pdf/pages/year-overview';
+import YearRetrospectivePage from '~/pdf/pages/year-retrospective';
 
 class RecalendarPdf extends React.Component {
 	styles = StyleSheet.create( {
@@ -103,6 +104,16 @@ class RecalendarPdf extends React.Component {
 			if ( this.props.isPreview && currentDate.month() === month + 1 ) {
 				break;
 			}
+		}
+
+		if ( this.props.config.isYearRetrospectiveEnabled ) {
+			pageList.push(
+				<YearRetrospectivePage
+					key={ 'year-retrospective-' + year }
+					date={ dayjs.utc( { year } ) }
+					config={ this.props.config }
+				/>,
+			);
 		}
 
 		pageList.push( <LastPage key="last" config={ this.props.config } /> );
