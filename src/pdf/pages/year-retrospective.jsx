@@ -6,7 +6,7 @@ import { withTranslation } from 'react-i18next';
 
 import Header from '~/pdf/components/header';
 import Itinerary from '~/pdf/components/itinerary';
-import MiniCalendar, { HIGHLIGHT_DAY } from '~/pdf/components/mini-calendar';
+import MiniCalendar, { HIGHLIGHT_NONE } from '~/pdf/components/mini-calendar';
 import PdfConfig from '~/pdf/config';
 import { yearRetrospectiveLink } from '~/pdf/lib/links';
 import { content, pageStyle } from '~/pdf/styles';
@@ -38,7 +38,7 @@ class YearRetrospectivePage extends React.Component {
 							calendar={
 								<MiniCalendar
 									date={ date }
-									highlightMode={ HIGHLIGHT_DAY }
+									highlightMode={ HIGHLIGHT_NONE }
 									config={ config }
 								/>
 							}
