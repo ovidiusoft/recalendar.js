@@ -29,7 +29,7 @@ class WeekOverviewPage extends React.Component {
 				},
 				day: {
 					width: '50%',
-					height: '14.25%',
+					height: `${100 / 7}%`,
 					border: '1 solid black',
 					flexDirection: 'column',
 					marginTop: -1,
@@ -37,6 +37,12 @@ class WeekOverviewPage extends React.Component {
 					padding: 5,
 					textDecoration: 'none',
 					color: 'black',
+				},
+				firstDay: {
+					borderTop: 'none',
+				},
+				lastDay: {
+					borderBottom: 'none',
 				},
 				dayDate: {
 					flexDirection: 'row',
@@ -81,9 +87,11 @@ class WeekOverviewPage extends React.Component {
 		let currentDate = date.startOf( 'week' );
 		const endOfWeek = date.endOf( 'week' );
 		const days = [];
+		let dayIndex = 0;
 		while ( currentDate.isBefore( endOfWeek ) ) {
-			days.push( this.renderDay( currentDate ) );
+			days.push( this.renderDay( currentDate, dayIndex ) );
 			currentDate = currentDate.add( 1, 'day' );
+			dayIndex++;
 		}
 
 		days.push( this.renderTodos() );
@@ -91,14 +99,20 @@ class WeekOverviewPage extends React.Component {
 		return days;
 	}
 
-	renderDay( day ) {
+	renderDay( day, dayIndex ) {
 		const { config } = this.props;
 		const specialDateKey = day.format( SPECIAL_DATES_DATE_FORMAT );
 		const specialItems = config.specialDates.filter( findByDate( specialDateKey ) );
+		const dayStyles = [ this.styles.day ];
+		if ( dayIndex === 0 ) {
+			dayStyles.push( this.styles.firstDay );
+		} else if ( dayIndex === 6 ) {
+			dayStyles.push( this.styles.lastDay );
+		}
 		return (
 			<Link
 				key={ day.unix() }
-				style={ this.styles.day }
+				style={ dayStyles }
 				src={ '#' + dayPageLink( day, config ) }
 			>
 				<View style={ { flexDirection: 'column' } }>
@@ -156,7 +170,9 @@ class WeekOverviewPage extends React.Component {
 							/>
 						}
 					/>
-					<View style={ this.styles.days }>{this.renderDays()}</View>
+					<View style={ this.styles.content }>
+						<View style={ this.styles.days }>{this.renderDays()}</View>
+					</View>
 				</View>
 			</Page>
 		);
